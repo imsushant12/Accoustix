@@ -1,0 +1,13 @@
+* {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+.navbar {
+  background-color: #e39ff6;
+  margin-bottom: 30px;
+}
+.register-img {
+  margin-top: 7.5rem;
+}
+.register-text-color {
+  color: #71777d;
+}
