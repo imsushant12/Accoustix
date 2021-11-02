@@ -1,13 +1,33 @@
+import re
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit, join_room
 from flask_pymongo import PyMongo
 from time import localtime, strftime
 from passlib.hash import pbkdf2_sha256
+from flask_mail import Message, Mail
 
 current_user = "test"
 
 app = Flask(__name__)
 
+#  Contact Us:
+file = open("credentials.txt", "r")
+own_email = file.readline().strip()
+own_password = file.readline().strip()
+file.close()
+
+mail = Mail(app)
+
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USERNAME"] = own_email
+app.config["MAIL_PASSWORD"] = own_password
+app.config["MAIL_USE_SSL"] = True
+
+mail = Mail(app)
+
+
+# Database integration
 app.config["MONGO_URI"] = "mongodb://localhost:27017/ChatSquad"
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
@@ -57,6 +77,37 @@ def register():
             )
 
     return render_template("register.html")
+
+
+@app.route("/contact", methods=["POST", "GET"])
+def contact():
+    messageSent = 0
+    if request.method == "POST":
+        usr_name = request.form["name"]
+        usr_email = request.form["email"]
+        usr_msg = request.form["message"]
+
+        msg = Message(
+            "Accoustix Contact Response",
+            sender=own_email,
+            recipients=[usr_email],
+        )
+
+        msg.body = f"""
+        Hi {usr_name}👋,
+
+        Thank you for contacting us.
+
+        We've recieved your message and one of our team members will get back to you soon.
+
+        Best Regards,
+        Team Accoustix.
+        """
+
+        mail.send(msg)
+        messageSent = 1
+
+    return render_template("contact.html", messageSent=messageSent)
 
 
 @socketio.on("message")
