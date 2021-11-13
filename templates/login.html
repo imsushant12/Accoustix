@@ -1,58 +1,61 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Contact Us
+    LogIn
 {% endblock title %}
 
 {% block body %}
-{% if messageSent == 1 %}
+    
+{% if wrong_credentials == 1 %}
 
-<div class="mt-5 alert alert-success text-center">
-    Message has been sent successfully! 🙌
+<div class="mt-5 alert alert-warning text-danger text-center">
+    Incorrect Credentials, please try again!
 </div>
 
 {% endif %}
+<!--body-->
 <section class="h-100 bg-white">
-    <div class="container py-1 h-100">
+    <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
-                <div class="card card-registration my-4">
+                <div class="card card-login my-4">
                     <div class="row g-0">
-                        <div class="register-img col-md-6 mx-auto d-xl-block">
-                            <img src="{{ url_for('static' ,filename='images/contact-us.png')}}" alt="Registration"
-                                class="img-fluid mb-5"
+                        <div class="login-img col-md-6 mx-auto d-xl-block">
+                            <img src="{{ url_for('static' ,filename='images/login-logo.svg')}}" alt="Login"
+                                class="img-fluid"
                                 style="border-top-left-radius: .25rem;
                    border-bottom-left-radius: .25rem; border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;" />
                         </div>
                         <div class="col-xl-6">
                             <div class="card-body p-md-5 text-black">
-                                <h3 class="mb-5 text-uppercase text-center ">Contact Us☎️ </h3>
-                                <h6 class="text-muted text-center mb-5">Get in touch!<br>
-                                    We'd' love to hear from you!</h6>
+                                <h3 class="mb-5 text-uppercase text-center ">Login 🤝 </h3>
+                                <h6 class="text-muted text-center mb-5"> Welcome Back!</h6>
 
                                 <!-- Form Starts -->
-                                <form action="/register" method="post">
-                                    <div class="form-outline register-text-color">
-                                        <label for="email">Your Email Address</label>
-                                        <input type="email" name="email" class="form-control" id="email"
-                                            placeholder="Enter your email" required />
+                                <form action="/login" method="post">
+                                    <div class="row">
+                                        <div class="form-outline mb-4">
+                                            <input type="email" id="email" name="email" placeholder="Email"
+                                                class="form-control form-control-md" required />
 
-                                    </div>
-                                    <div class="form-outline register-text-color mt-4">
-                                        <label for="name">Your Name</label>
-                                        <input type="name" name="name" class="form-control" id="name"
-                                            placeholder="Enter your name">
-                                    </div>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="password" id="password" name="password" placeholder="Password"
+                                                class="form-control form-control-md" required />
 
-                                    <div class="form-outline mb-4 register-text-color mt-4">
-                                        <label for="message">Your Message</label>
-                                        <textarea name="message" class="form-control" id="message" rows="5"></textarea>
-                                    </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end pt-9">
+                                            <button type="submit" class="btn btn-success btn-sm">LogIn</button>
 
-                                    <div class="d-flex justify-content-end pt-3">
-                                        <button type="reset" class="btn btn-danger btn-sm">Clear</button>
-                                        <button type="submit" class="btn btn-success btn-sm ms-2">Send
-                                            Message</button>
+                                        </div>
+
+                                        <br>
+
+                                        <div class=" text-muted mb-5"> Don't have an account?</h6>
+                                            <a href="{{url_for('register')}}"><button type="button"
+                                                    class="btn text-dark btn-outline-warning btn-sm"> Register
+                                                    Here</button></a>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -61,6 +64,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </section>
 <!-- Footer -->
 <footer class="bg-dark text-center text-white">

@@ -1,5 +1,4 @@
-import re
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_socketio import SocketIO, send, emit, join_room
 from flask_pymongo import PyMongo
 from time import localtime, strftime
@@ -39,12 +38,15 @@ socketio = SocketIO(app)
 
 @app.route("/")
 def home():
-    return "home"
-
+    return render_template("home.html")
 
 @app.route("/chat")
 def chat():
     return render_template("chat.html", username=current_user)
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -108,6 +110,28 @@ def contact():
         messageSent = 1
 
     return render_template("contact.html", messageSent=messageSent)
+
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    wrong_credentials = 0
+    if request.method == "POST":
+        users = db.users
+        user_email = request.form["email"]
+        user_password = request.form["password"]
+
+        current_user = users.find_one({"email": user_email})
+        print(current_user)
+
+        if current_user and pbkdf2_sha256.verify(
+            user_password, current_user["password"]
+        ):
+            return redirect(url_for("chat"))
+        else:
+            wrong_credentials = 1
+            return render_template("login.html", wrong_credentials=wrong_credentials)
+
+    return render_template("login.html")
 
 
 @socketio.on("message")
