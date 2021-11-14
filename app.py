@@ -117,18 +117,18 @@ def login():
 def contact():
     messageSent = 0
     if request.method == "POST":
-        usr_name = request.form["name"]
-        usr_email = request.form["email"]
-        usr_msg = request.form["message"]
+        user_name = request.form["name"]
+        user_email = request.form["email"]
+        user_msg = request.form["message"]
 
         msg = Message(
             "Accoustix Contact Response",
             sender=own_email,
-            recipients=[usr_email],
+            recipients=[user_email],
         )
 
         msg.body = f"""
-        Hi {usr_name}👋,
+        Hi {user_name}👋,
 
         Thank you for contacting us.
 
