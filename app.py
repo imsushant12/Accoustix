@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, g
 from flask_socketio import SocketIO, send, emit, join_room
 from flask_pymongo import PyMongo
 from time import localtime, strftime
@@ -10,10 +10,12 @@ current_user = "test"
 app = Flask(__name__)
 
 #  Contact Us:
-file = open("credentials.txt", "r")
-own_email = file.readline().strip()
-own_password = file.readline().strip()
-file.close()
+# file = open("credentials.txt", "r")
+# own_email = file.readline().strip()
+# own_password = file.readline().strip()
+# file.close()
+own_email = 'gotocoders@gmail.com'
+own_password = 'goto2021'
 
 mail = Mail(app)
 
@@ -27,7 +29,7 @@ mail = Mail(app)
 
 
 # Database integration
-app.config["MONGO_URI"] = "mongodb://localhost:27017/ChatSquad"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/Accoustix"
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
@@ -35,6 +37,13 @@ app.config["SECRET_KEY"] = "melodyitnichocolatykyuhai"
 # Creating an instance of SocketIO using constructor.
 socketio = SocketIO(app)
 
+
+@app.before_request
+def before_request():
+    g.user = None
+    if "user_email" in session:
+        user = db.users.find_one({'email' : session['user_email']})
+        g.user = user
 
 @app.route("/")
 def home():
@@ -51,17 +60,18 @@ def about():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    user_exists = False
     if request.method == "POST":
         # getting user's data from registration page
-        users = db.users
         first_name = request.form["first-name"]
         last_name = request.form["last-name"]
         email = request.form["email"]
         dob = request.form["user-dob"]
         username = request.form["username"]
         password = request.form["password"]
+        gender = request.form['gender']
 
-        existing_user = users.find_one({"email": email, "username": username})
+        existing_user = db.users.find_one({"email": email, "username": username})
         if existing_user is None:
             # encrypting user's password for protection.
             hashed_password = pbkdf2_sha256.hash(password)
@@ -74,12 +84,36 @@ def register():
                     "first_name": first_name,
                     "last_name": last_name,
                     "dob": dob,
+                    "gender": gender,
                     "password": hashed_password,
                 }
             )
+            return redirect(url_for('login'))
+        else:
+            user_exists = True
 
-    return render_template("register.html")
+    return render_template("register.html", user_exists=user_exists)
 
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    wrong_credentials = False
+    if request.method == "POST":
+        users = db.users
+        user_email = request.form["email"]
+        user_password = request.form["password"]
+
+        current_user = users.find_one({"email": user_email})
+        print(current_user)
+
+        if current_user and pbkdf2_sha256.verify(user_password, current_user["password"]):
+            session['user_email'] = current_user['email']
+            return redirect(url_for("chat"))
+        else:
+            wrong_credentials = True
+            return render_template("login.html", wrong_credentials=wrong_credentials)
+
+    return render_template("login.html")
 
 @app.route("/contact", methods=["POST", "GET"])
 def contact():
@@ -110,28 +144,6 @@ def contact():
         messageSent = 1
 
     return render_template("contact.html", messageSent=messageSent)
-
-
-@app.route("/login", methods=["POST", "GET"])
-def login():
-    wrong_credentials = 0
-    if request.method == "POST":
-        users = db.users
-        user_email = request.form["email"]
-        user_password = request.form["password"]
-
-        current_user = users.find_one({"email": user_email})
-        print(current_user)
-
-        if current_user and pbkdf2_sha256.verify(
-            user_password, current_user["password"]
-        ):
-            return redirect(url_for("chat"))
-        else:
-            wrong_credentials = 1
-            return render_template("login.html", wrong_credentials=wrong_credentials)
-
-    return render_template("login.html")
 
 
 @socketio.on("message")
