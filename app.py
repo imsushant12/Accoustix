@@ -10,12 +10,10 @@ current_user = "test"
 app = Flask(__name__)
 
 #  Contact Us:
-# file = open("credentials.txt", "r")
-# own_email = file.readline().strip()
-# own_password = file.readline().strip()
-# file.close()
-own_email = 'gotocoders@gmail.com'
-own_password = 'goto2021'
+file = open("credentials.txt", "r")
+own_email = file.readline().strip()
+own_password = file.readline().strip()
+file.close()
 
 mail = Mail(app)
 
@@ -37,7 +35,7 @@ app.config["SECRET_KEY"] = "melodyitnichocolatykyuhai"
 # Creating an instance of SocketIO using constructor.
 socketio = SocketIO(app)
 
-
+# Creating a global user
 @app.before_request
 def before_request():
     g.user = None
@@ -77,7 +75,7 @@ def register():
             hashed_password = pbkdf2_sha256.hash(password)
 
             # inserting data into the db.
-            users.insert_one(
+            db.users.insert_one(
                 {
                     "email": email,
                     "username": username,
