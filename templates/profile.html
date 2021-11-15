@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Profile
+{% endblock title %}
+
+{% block body %}
+<section class="h-100 bg-white">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-login my-4">
+                    <div class="row g-0">
+                        <div class="col-md-6 mx-auto d-xl-block">
+                            <img src="{{ url_for('static' ,filename='images/my-profile.png')}}" alt="Login"
+                                class="img-fluid"
+                                style="border-top-left-radius: .25rem;
+                   border-bottom-left-radius: .25rem; border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;" />
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card-body p-md-5 text-black">
+                                <h3 class="mb-5 text-uppercase text-center ">My Profile 😎</h3>
+
+                                <!-- Form Starts -->
+                                <form action="{{url_for('profile')}}" method="POST">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" id="email" name="email" value="{{g.user.email}}"
+                                                class="form-control" placeholder="Email" disabled>
+                                        </div>
+                                        <hr style="color:white">
+                                        <div class="col">
+                                            <input type="text" name="username" value="{{g.user.username}}"
+                                                class="form-control" placeholder="Username">
+                                        </div>
+                                        <hr style="color:white">
+                                        <div class="col">
+                                            <input type="text" name="first-name" value="{{g.user.first_name}}"
+                                                class="form-control" placeholder="First name">
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" name="last-name" value="{{g.user.last_name}}"
+                                                class="form-control" placeholder="Last name">
+                                        </div>
+                                        <hr style="color:white">
+                                        <div class="form-outline mb-4">
+                                            <input type="password" id="oldpassword" name="oldpassword"
+                                                placeholder="Old Password" class="form-control form-control-md" />
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="password" id="newpassword" name="newpassword"
+                                                placeholder="New Password" class="form-control form-control-md" />
+                                        </div>
+                                        <button type="submit" class="btn btn-success btn-sm ms-2">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}
