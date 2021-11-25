@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, g
-from flask.scaffold import _matching_loader_thinks_module_is_package
-from flask_socketio import SocketIO, send, emit, join_room
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_pymongo import PyMongo
-from time import localtime, strftime
+from time import localtime, strftime, time
 from passlib.hash import pbkdf2_sha256
 from flask_mail import Message, Mail
 
@@ -54,9 +53,11 @@ def home():
 def chat():
     return render_template("chat.html", username=current_user)
 
+
 @app.route("/chat2")
 def chat2():
     return render_template("chat2.html", username=current_user)
+
 
 @app.route("/about")
 def about():
@@ -115,13 +116,17 @@ def login():
             user_password, current_user["password"]
         ):
             session["user_email"] = current_user["email"]
-            return redirect(url_for("chat"))
+            return redirect(url_for("chat2"))
         else:
             wrong_credentials = True
             return render_template("login.html", wrong_credentials=wrong_credentials)
 
     return render_template("login.html")
 
+@app.route("/logout")
+def logout():
+    session.pop("user_email", None)
+    return redirect(url_for("home"))
 
 @app.route("/contact", methods=["POST", "GET"])
 def contact():
@@ -176,10 +181,41 @@ def profile():
                     }
                 },
             )
-        return redirect(url_for('profile'))
+        return redirect(url_for("profile"))
     return render_template("profile.html")
 
+@socketio.on("incoming-msg")
+def on_message(data):
+    """Broadcast messages"""
 
+    msg = data["msg"]
+    username = data["username"]
+    room = data["room"]
+    # Set timestamp
+    time_stamp = time.strftime("%b-%d %I:%M%p", time.localtime())
+    send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=room)
+
+
+@socketio.on("join")
+def on_join(data):
+    """User joins a room"""
+
+    username = data["username"]
+    room = data["room"]
+    join_room(room)
+
+    # Broadcast that new user has joined
+    send({"msg": username + " has joined the " + room + " room."}, room=room)
+
+
+@socketio.on("leave")
+def on_leave(data):
+    """User leaves a room"""
+
+    username = data["username"]
+    room = data["room"]
+    leave_room(room)
+    send({"msg": username + " has left the room"}, room=room)
 
 
 # @socketio.on("message")
