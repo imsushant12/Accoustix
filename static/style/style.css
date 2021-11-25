@@ -89,3 +89,7 @@
   flex-direction: row-reverse;
   margin-left: auto;
 }
+
+#get_username {
+  display: none;
+}
