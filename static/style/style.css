@@ -1,16 +1,20 @@
 * {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+
 .navbar {
   background-color: #e39ff6;
   margin-bottom: 30px;
 }
+
 .register-img {
   margin-top: 7.5rem;
 }
+
 .register-text-color {
   color: #71777d;
 }
+
 /* About Us */
 .social-link {
   width: 30px;
@@ -31,10 +35,57 @@
   text-decoration: none;
   color: #555;
 }
+
 * {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+
+/* Chat Window */
 .navbar {
   background-color: #e39ff6;
   margin-bottom: 30px;
+}
+
+.py-3 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.px-4 {
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
+}
+
+.flex-grow-0 {
+  flex-grow: 0 !important;
+}
+
+.border-top {
+  border-top: 1px solid #dee2e6 !important;
+}
+
+.welcome-header {
+  margin-top: 40vh;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  max-height: 800px;
+  overflow-y: scroll;
+}
+
+.chat-message-left,
+.chat-message-right {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.chat-message-left {
+  margin-right: auto;
+}
+
+.chat-message-right {
+  flex-direction: row-reverse;
+  margin-left: auto;
 }

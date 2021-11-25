@@ -54,6 +54,9 @@ def home():
 def chat():
     return render_template("chat.html", username=current_user)
 
+@app.route("/chat2")
+def chat2():
+    return render_template("chat2.html", username=current_user)
 
 @app.route("/about")
 def about():
@@ -160,9 +163,6 @@ def profile():
         newpassword = request.form["newpassword"]
         oldpassword = request.form["oldpassword"]
 
-        # current_user = db.users.find_one({"email": user_email})
-        # print(current_user)
-
         if g.user and pbkdf2_sha256.verify(oldpassword, g.user["password"]):
             hashed_password = pbkdf2_sha256.hash(newpassword)
             db.users.update_one(
@@ -180,22 +180,24 @@ def profile():
     return render_template("profile.html")
 
 
-@socketio.on("message")
-def message(data):
-    # print("Message: ", data, "\n\n\n\n")
-    send(
-        {
-            "msg": data["msg"],
-            "username": data["username"],
-            "timestamp": strftime("%b-%d %I:%M%p", localtime()),
-        }
-    )
 
 
-@socketio.on("join")
-def join(data):
-    join_room(data["room"])
-    send({"msg": data["username"] + "has joined the room"})
+# @socketio.on("message")
+# def message(data):
+#     # print("Message: ", data, "\n\n\n\n")
+#     send(
+#         {
+#             "msg": data["msg"],
+#             "username": data["username"],
+#             "timestamp": strftime("%b-%d %I:%M%p", localtime()),
+#         }
+#     )
+
+
+# @socketio.on("join")
+# def join(data):
+#     join_room(data["room"])
+#     send({"msg": data["username"] + "has joined the room"})
 
 
 if __name__ == "__main__":
