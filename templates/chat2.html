@@ -112,7 +112,12 @@
                     </div>
                 </div>
     </main>
-    <span id="get_username">{{username}}</span>
+    
+
+    <script type="text/javascript">
+        const username = `{{ username }}`;
+        console.log(username);
+    </script>
 
     <script src="{{ url_for('static', filename='js/socketio.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
