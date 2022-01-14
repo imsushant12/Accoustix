@@ -46,9 +46,11 @@
 .about-img {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 500px;
-  width: 500px;
+  margin: auto;
+  height: 250px;
+  width: 250px;
+  border: 2px solid white;
+  border-radius: 25px;
 }
 
 .social-link {
@@ -124,7 +126,6 @@
   flex-direction: row-reverse;
   margin-left: auto;
 }
-
 
 #display-message-section {
   margin-top: 5em;
