@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // creating an event bucket and sending message to server(app.py):
-  socket.on("connect", () => {
-    socket.send("I am connected!");
-  });
+  // socket.on("connect", () => {
+  //   socket.send("I am connected!");
+  // });
 
   socket.on("message", (data) => {
     console.log(data);
