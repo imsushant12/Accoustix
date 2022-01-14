@@ -1,8 +1,67 @@
 {% extends 'base.html' %}
+
 {% block title %}
-Accoustix
+Accoustix - Home
 {% endblock title %}
 
 {% block body %}
-home
+
+<body class="home-bg2">
+    <section class="h-100 bg-white home-bg2">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-login my-4 home-bg">
+                        <div class="row g-0 home-bg">
+                            <div class="login-img col-md-6 mx-auto d-xl-block">
+                                <img src="{{ url_for('static' ,filename='images/Accoustix.svg')}}" alt="Login"
+                                    class="img-fluid align-image"
+                                    style="border-top-left-radius: .25rem;
+                   border-bottom-left-radius: .25rem; border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;" />
+
+                            </div>
+
+                            <div class="col-xl-6 home-bg">
+                                <div class="card-body p-md-5 text-black home-bg">
+                                    <h2 class="home-h2">
+                                        Connect With Friends & Family!
+                                    </h2>
+                                    <br>
+
+                                    <p>
+                                    <h5>
+                                        Accoustix is a fast, simple, secure, and fun way to share the moment with your
+                                        friends and family. Accoustix provides secure messaging and calling in a single
+                                        go!
+                                        <br>
+                                        <br>
+                                        We don't save the messages of our users. So, with our end-to-end encryption, you
+                                        can safely connect with your loved ones. When end-to-end encrypted, your
+                                        messages and calls are secured so only you and the person you're communicating
+                                        with can read or listen to them, and nobody in between, not even us.
+                                        <br><br>
+                                        Accoustix is available on web devices all over the world.
+                                    </h5>
+                                    <hr>
+                                    <h5 class="home-h5">Join our awesome family!</h5>
+                                    <h5 class="home-h5">STAY IN TOUCH</h5>
+                                    </p>
+
+
+                                    <div class="home-h5">
+                                        <a href="{{ url_for('register')}}"><button type="button"
+                                                class="btn fw-bold btn-outline-dark text-drak bg-transparent btn-md">Register
+                                                Now</button></a>
+                                        <a href="{{ url_for('login')}}"><button type="button"
+                                                class="btn fw-bold text-drak btn-outline-dark bg-transparent btn-md mx-2 ">LogIn</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
 {% endblock body %}

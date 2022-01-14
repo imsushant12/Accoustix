@@ -1,14 +1,41 @@
 * {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-family: "Dongle", sans-serif;
+}
+
+/* background: linear-gradient(90deg, #e39ff6 0%, #e39ff6 100%); */
+.home-bg {
+  background: linear-gradient(180deg, #e39ff6 0%, #e77198 50%);
+}
+
+.home-bg2 {
+  background: linear-gradient(90deg, #e39ff6 0%, #e77198 50%);
+}
+
+.home-h2 {
+  font-family: cursive;
+  font-weight: bold;
+}
+
+.home-h5 {
+  font-family: cursive;
+  font-weight: bold;
+  text-align: center;
+}
+
+.align-image {
+  margin-top: 4rem;
+  margin-left: 0.05rem;
+  width: 500px;
+  height: 500px;
 }
 
 .navbar {
-  background-color: #e39ff6;
+  background: linear-gradient(100deg, #e39ff6 0%, #e77198 50%);
   margin-bottom: 30px;
 }
 
 .register-img {
-  margin-top: 7.5rem;
+  margin-top: 4rem;
 }
 
 .register-text-color {
@@ -16,6 +43,14 @@
 }
 
 /* About Us */
+.about-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  width: 500px;
+}
+
 .social-link {
   width: 30px;
   height: 30px;

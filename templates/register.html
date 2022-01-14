@@ -20,7 +20,7 @@ Register
                     <div class="row g-0">
                         <div class="register-img col-md-6 mx-auto d-xl-block">
                             <img src="{{ url_for('static' ,filename='images/registration-logo.svg')}}"
-                                alt="Registration" class="img-fluid"
+                                alt="Registration" class="img-fluid align-image"
                                 style="border-top-left-radius: .25rem;
                    border-bottom-left-radius: .25rem; border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;" />
                         </div>
@@ -117,6 +117,10 @@ Register
                                         <button type="reset" class="btn btn-danger btn-sm">Clear</button>
                                         <button type="submit" class="btn btn-success btn-sm ms-2">Create
                                             account</button>
+                                    </div>
+                                    <div class=" text-muted mb-5"> Already a member?</h6>
+                                        <a href="{{url_for('login')}}"><button type="button"
+                                                class="btn btn-outline-primary text-dark btn-md">LogIn</button></a>
                                     </div>
                                 </form>
                             </div>
