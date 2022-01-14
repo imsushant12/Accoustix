@@ -27,13 +27,14 @@ mail = Mail(app)
 
 
 # Database integration
-app.config["MONGO_URI"] = "mongodb://localhost:27017/ChatSquad"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/Accoustix"
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
 app.config["SECRET_KEY"] = "melodyitnichocolatykyuhai"
 # Creating an instance of SocketIO using constructor.
 socketio = SocketIO(app)
+
 
 # Creating a global user
 @app.before_request
@@ -51,12 +52,12 @@ def home():
 
 @app.route("/chat")
 def chat():
-    return render_template("chat.html", username=current_user)
+    return render_template("chat.html", username=g.user['username'])
 
 
 @app.route("/chat2")
 def chat2():
-    return render_template("chat2.html", username=current_user)
+    return render_template("chat2.html", username=g.user['username'])
 
 
 @app.route("/about")
@@ -184,16 +185,21 @@ def profile():
         return redirect(url_for("profile"))
     return render_template("profile.html")
 
+
+
+''' --------- SocketIO Code Starts ----------'''
+
 @socketio.on("incoming-msg")
 def on_message(data):
+    
     """Broadcast messages"""
 
     msg = data["msg"]
     username = data["username"]
     room = data["room"]
     # Set timestamp
-    time_stamp = time.strftime("%b-%d %I:%M%p", time.localtime())
-    send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=room)
+    time_stamp = strftime("%b-%d %I:%M%p", localtime())
+    send({"username": username, "msg": msg, "time_stamp": time_stamp},  broadcast=True)
 
 
 @socketio.on("join")
@@ -237,4 +243,4 @@ def on_leave(data):
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, port=5500)

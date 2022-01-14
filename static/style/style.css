@@ -90,6 +90,10 @@
   margin-left: auto;
 }
 
-#get_username {
-  display: none;
+
+#display-message-section {
+  margin-top: 5em;
+  min-height: 50vh;
+  max-height: 50vh;
+  overflow-y: auto; /*Make  this section scrolable */
 }

@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // creating connection object with our domain and port-number
-  var socket = io.connect("http://" + document.domain + ":" + location.port);
+  var socket = io.connect("http://127.0.0.1:5500");
 
-  const username = document.querySelector("#get_username").innerHTML;
 
   // creating an event bucket and sending message to server(app.py):
   socket.on("connect", () => {
@@ -67,15 +66,30 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollDownChatWindow();
   });
 
+  user_input_messsage = document.querySelector("#user_message");
   document.querySelector("#send_message").onclick = () => {
+    send_message();
+    user_input_messsage.value = "";
+  }
+
+  user_input_messsage.addEventListener('keyup', (e) => {
+    if (e.keyCode === 13){
+        send_message();
+        user_input_messsage.value = '';
+    }
+  })
+
+  const send_message = () => {
     socket.emit("incoming-msg", {
       msg: document.querySelector("#user_message").value,
       username: username,
       room: 1,
     });
-
-    document.querySelector("#user_message").value = "";
   };
+
+
+
+
 });
 
 // Scroll chat window down
