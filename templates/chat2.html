@@ -49,18 +49,22 @@
                         <div class="px-4 d-md-block">
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1">
-                                    <input type="text" class="form-control my-3" placeholder="Search..." />
+                                    <input type="text" class="form-control my-3" id='search-members' placeholder="Search..." />
                                 </div>
                             </div>
                         </div>
-
+                    <div id="user-search">
                         <a href="#" class="list-group-item list-group-item-action border-0">
                             <div class="d-flex align-items-start">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                    class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40" />
-                                <div class="flex-grow-1 mx-2">Vanessa Tucker</div>
+                                    class="rounded-circle mr-1"
+                                    id="search_user_img"  alt="Vanessa Tucker" width="40" height="40" style="display: none;" />
+                                <div class="flex-grow-1 mx-2" id="search_user_name">
+
+                                </div>
                             </div>
                         </a>
+                    </div>
 
                         <hr class="d-block d-lg-none mt-1 mb-0" />
                     </div>
@@ -69,7 +73,7 @@
                             <div class="d-flex align-items-center py-1">
                                 <div class="position-relative">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                                        class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40" />
+                                        class="rounded-circle mr-1" alt="userimage" width="40" height="40" />
                                 </div>
                                 <div class="flex-grow-1 pl-3 mx-2">
                                     <strong>Sharon Lessman</strong>
@@ -119,7 +123,8 @@
         console.log(username);
     </script>
 
-    <script src="{{ url_for('static', filename='js/socketio.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/socketio.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
         integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
         crossorigin="anonymous"></script>
