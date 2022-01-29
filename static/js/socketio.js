@@ -2,11 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // creating connection object with our domain and port-number
   var socket = io.connect("http://127.0.0.1:5500");
 
-
   // creating an event bucket and sending message to server(app.py):
-  socket.on("connect", () => {
-    socket.send("I am connected!");
-  });
+  // socket.on("connect", () => {
+  //   socket.send("I am connected!");
+  // });
+  // let room = '1234';
+  // joinRoom(room);
 
   socket.on("message", (data) => {
     console.log(data);
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       // Display system message
       else {
-        printSysMsg(data.msg);
+        // printSysMsg(data.msg);
       }
     }
     scrollDownChatWindow();
@@ -83,40 +84,32 @@ document.addEventListener("DOMContentLoaded", () => {
     socket.emit("incoming-msg", {
       msg: document.querySelector("#user_message").value,
       username: username,
-      room: 1,
+      room: room,
     });
+    console.log('Message sent');
+    console.log(room);
   };
 
-
-
-
-});
-
-// Scroll chat window down
-function scrollDownChatWindow() {
-  const chatWindow = document.querySelector("#display-message-section");
-  chatWindow.scrollTop = chatWindow.scrollHeight;
+  function joinRoom(newroom){
+    socket.emit('join', {'username': username, 'room': newroom})
+    console.log(`room joined ${newroom} by user ${username}`);
+    room = newroom
+    
+    // document.querySelector('#display-message-section').innerHTML = ''
+    // document.querySelector('#user_message').focus();
 }
 
-/*
-socket.on("message", (data) => {
-  console.log(`Message recieved! ${data}`)
-
-  const p = document.createElement("p");
-  const br = document.createElement("br");
-  const span_username = document.createElement("span");
-  const span_timestamp = document.createElement("span");
-
-  span_username.innerHTML = data.username;
-  span_timestamp.innerHTML = data.timestamp;
-
-  p.innerHTML =
-    span_username.outerHTML +
-    br.outerHTML +
-    data.msg +
-    br.outerHTML +
-    span_timestamp.outerHTML;
-  document.querySelector("#display-message-section").append(p);
+// Clicking on the searched user to join room
+document.querySelector('#user-search').addEventListener('click', ()=> {
+  searched_username = localStorage.getItem('searched_username');
+  var room;
+  if(searched_username < username){
+    room = searched_username + username;
+  }
+  else{
+    room = username + searched_username;
+  }
+  joinRoom(room);
+})
 
 });
-*/

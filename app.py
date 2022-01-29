@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session, g
+from flask import Flask, render_template, request, redirect, url_for, session, g, jsonify
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_pymongo import PyMongo
 from time import localtime, strftime, time
 from passlib.hash import pbkdf2_sha256
 from flask_mail import Message, Mail
+from bson.json_util import dumps, loads
+# import additional
 
 current_user = "test"
 
@@ -114,9 +116,9 @@ def login():
         print(current_user)
 
         if current_user and pbkdf2_sha256.verify(
-            user_password, current_user["password"]
-        ):
+            user_password, current_user["password"]):
             session["user_email"] = current_user["email"]
+            # join_room(current_user["connection"])
             return redirect(url_for("chat2"))
         else:
             wrong_credentials = True
@@ -186,20 +188,38 @@ def profile():
     return render_template("profile.html")
 
 
+@app.route('/searchmembers/<data>', methods=['GET', 'POST'])
+def serach_members(data):
+    # user = db.users.find({
+    #     '$or': [
+    #             { 'first_name': { '$regex' : '/{data}/' } },
+    #             { 'last_name': { '$regex' : '/{data}/' } },
+    #             { 'username': { '$regex' : '/{data}/' } },
+    #             { 'email': { '$regex' : '/{data}/' } }
+    #     ]
+    # })
+    user = db.users.find({
+        'username' : data
+    })
+
+    print(user.count())     
+    return dumps(user)
+
 
 ''' --------- SocketIO Code Starts ----------'''
 
 @socketio.on("incoming-msg")
 def on_message(data):
     
-    """Broadcast messages"""
-
+    # """Broadcast messages"""
+    print(data)
     msg = data["msg"]
     username = data["username"]
     room = data["room"]
     # Set timestamp
     time_stamp = strftime("%b-%d %I:%M%p", localtime())
-    send({"username": username, "msg": msg, "time_stamp": time_stamp},  broadcast=True)
+    send({"username": username, "msg": msg, "time_stamp": time_stamp},  room=room)
+    
 
 
 @socketio.on("join")
@@ -209,6 +229,7 @@ def on_join(data):
     username = data["username"]
     room = data["room"]
     join_room(room)
+    print(f'\n\nRoom joined by user {data["username"]}\n\n')
 
     # Broadcast that new user has joined
     send({"msg": username + " has joined the " + room + " room."}, room=room)
