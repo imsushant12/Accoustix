@@ -35,11 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function printUser(data){
     let element = data[0];
     console.log(element);
-    user_img = document.querySelector('#search_user_img').style.display = 'block';
-    let name = element['first_name'] + ' ' +  element['last_name'];
-    document.querySelector('#search_user_name').innerHTML = name;
-    localStorage.setItem('searched_username', element['username'])
-    localStorage.setItem('searched_Name', name);
+    if(element != undefined){
+      user_img = document.querySelector('#search_user_img').style.display = 'block';
+      let name = element['first_name'] + ' ' +  element['last_name'];
+      document.querySelector('#search_user_name').innerHTML = name;
+      localStorage.setItem('searched_username', element['username'])
+      localStorage.setItem('searched_Name', name);
+    }
+    else{
+      document.querySelector('#search_user_name').innerHTML = 'No user found';
+    }
 
   }
 
