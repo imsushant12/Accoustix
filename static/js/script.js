@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
   
-  // Searching the members present from the database.
+  // Searching members present from the database.
   search_members = document.querySelector('#search-members')
   search_members.addEventListener('keyup', (e)=>{
     if(e.keyCode === 13){
@@ -36,8 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let element = data[0];
     console.log(element);
     user_img = document.querySelector('#search_user_img').style.display = 'block';
-    document.querySelector('#search_user_name').innerHTML = element['first_name'] + ' ' +  element['last_name'];
+    let name = element['first_name'] + ' ' +  element['last_name'];
+    document.querySelector('#search_user_name').innerHTML = name;
     localStorage.setItem('searched_username', element['username'])
+    localStorage.setItem('searched_Name', name);
 
   }
 

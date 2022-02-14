@@ -57,11 +57,6 @@ def chat():
     return render_template("chat.html", username=g.user['username'])
 
 
-@app.route("/chat2")
-def chat2():
-    return render_template("chat2.html", username=g.user['username'])
-
-
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -119,7 +114,7 @@ def login():
             user_password, current_user["password"]):
             session["user_email"] = current_user["email"]
             # join_room(current_user["connection"])
-            return redirect(url_for("chat2"))
+            return redirect(url_for("chat"))
         else:
             wrong_credentials = True
             return render_template("login.html", wrong_credentials=wrong_credentials)
@@ -189,7 +184,7 @@ def profile():
 
 
 @app.route('/searchmembers/<data>', methods=['GET', 'POST'])
-def serach_members(data):
+def search_members(data):
     # user = db.users.find({
     #     '$or': [
     #             { 'first_name': { '$regex' : '/{data}/' } },
