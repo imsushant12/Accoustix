@@ -28,13 +28,13 @@
         <ul class="nav justify-content-start mx-5">
 
             <li class="nav-item mt-2 ">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{url_for('profile')}}">
                     <p class="btn btn-dark btn-sm " style="color:#e39ff6">My Profile <i class="fas fa-user mx-2"></i>
                     </p>
                 </a>
             </li>
             <li class="nav-item mt-2">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{url_for('logout')}}">
                     <p class="btn btn-dark btn-sm" style="color:#e39ff6">Log out <i
                             class="fas fa-sign-out-alt mx-2"></i></p>
                 </a>
@@ -54,22 +54,23 @@
                             <div class="px-4 d-md-block">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
-                                        <input type="text" class="form-control my-3" id='search-members' placeholder="Search..." />
+                                        <input type="text" class="form-control my-3" id='search-members'
+                                            placeholder="Search..." />
                                     </div>
                                 </div>
                             </div>
-                        <div id="user-search">
-                            <a href="#" class="list-group-item list-group-item-action border-0">
-                                <div class="d-flex align-items-start">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                        class="rounded-circle mr-1"
-                                        id="search_user_img"  alt="Vanessa Tucker" width="40" height="40" style="display: none;" />
-                                    <div class="flex-grow-1 mx-2" id="search_user_name">
+                            <div id="user-search">
+                                <a href="#" class="list-group-item list-group-item-action border-0">
+                                    <div class="d-flex align-items-start">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                            class="rounded-circle mr-1" id="search_user_img" alt="Vanessa Tucker"
+                                            width="40" height="40" style="display: none;" />
+                                        <div class="flex-grow-1 mx-2" id="search_user_name">
 
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
 
                             <hr class="d-block d-lg-none mt-1 mb-0" />
                         </div>
@@ -94,22 +95,23 @@
                             <div class="px-4 d-md-block">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
-                                        <input type="text" class="form-control my-3" id='search-members' placeholder="Search..." />
+                                        <input type="text" class="form-control my-3" id='search-members'
+                                            placeholder="Search..." />
                                     </div>
                                 </div>
                             </div>
-                        <div id="user-search">
-                            <a href="#" class="list-group-item list-group-item-action border-0">
-                                <div class="d-flex align-items-start">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                        class="rounded-circle mr-1"
-                                        id="search_user_img"  alt="Vanessa Tucker" width="40" height="40" style="display: none;" />
-                                    <div class="flex-grow-1 mx-2" id="search_user_name">
+                            <div id="user-search">
+                                <a href="#" class="list-group-item list-group-item-action border-0">
+                                    <div class="d-flex align-items-start">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                            class="rounded-circle mr-1" id="search_user_img" alt="User" width="40"
+                                            height="40" style="display: none;" />
+                                        <div class="flex-grow-1 mx-2" id="search_user_name">
 
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
 
                             <hr class="d-block d-lg-none mt-1 mb-0" />
                         </div>
@@ -124,25 +126,8 @@
                                         <strong id="other_user_name"></strong>
                                     </div>
                                     <div>
-                                        <button class="btn btn-primary btn-lg mr-1 px-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-phone feather-lg">
-                                                <path
-                                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                                                </path>
-                                            </svg>
-                                        </button>
-                                        <button class="btn btn-info btn-lg mr-1 px-3 d-md-inline-block">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-video feather-lg">
-                                                <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                                            </svg>
-                                        </button>
+                                        <button class="btn btn-lg btn-outline-primary fw-bold" id="leave-chat-room">Exit
+                                            Chat</button>
                                     </div>
                                 </div>
                             </div>
@@ -169,12 +154,12 @@
         const username = `{{ username }}`;
         console.log(username);
     </script>
-    
+
     <script src="{{ url_for('static', filename='js/socketio.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
         integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
-        crossorigin="anonymous"></script> 
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
