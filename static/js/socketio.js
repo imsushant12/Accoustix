@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // creating connection object with our domain and port-number
   var socket = io.connect("http://127.0.0.1:5500");
 
-  var room = '';
+  var room = "";
   // creating an event bucket and sending message to server(app.py):
   // socket.on("connect", () => {
   //   socket.send("I am connected!");
@@ -10,11 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // let room = '1234';
   // joinRoom(room);
 
-  const emptychat = document.querySelector('#emptychat');
-  emptychat.style.display = 'block';
-  const roomCreated = document.querySelector('#room-created');
-  roomCreated.style.display = 'none';
-
+  const emptychat = document.querySelector("#emptychat");
+  emptychat.style.display = "block";
+  const roomCreated = document.querySelector("#room-created");
+  roomCreated.style.display = "none";
 
   socket.on("message", (data) => {
     console.log(data);
@@ -78,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#send_message").onclick = () => {
     send_message();
     user_input_messsage.value = "";
-  }
+  };
 
-  user_input_messsage.addEventListener('keyup', (e) => {
-    if (e.keyCode === 13){
-        send_message();
-        user_input_messsage.value = '';
+  user_input_messsage.addEventListener("keyup", (e) => {
+    if (e.keyCode === 13) {
+      send_message();
+      user_input_messsage.value = "";
     }
-  })
+  });
 
   const send_message = () => {
     socket.emit("incoming-msg", {
@@ -93,46 +92,49 @@ document.addEventListener("DOMContentLoaded", () => {
       username: username,
       room: room,
     });
-    console.log('Message sent');
+    console.log("Message sent");
     console.log(room);
   };
 
-  function joinRoom(newroom){
-    if(room == ''){
-      socket.emit('join', {'username': username, 'room': newroom})
+  function joinRoom(newroom) {
+    if (room == "") {
+      socket.emit("join", { username: username, room: newroom });
       console.log(`room joined ${newroom} by user ${username}`);
-      room = newroom
-      emptychat.style.display = 'none';
-      roomCreated.style.display = 'block';
-    }
-    else if( newroom!=room){
+      room = newroom;
+      emptychat.style.display = "none";
+      roomCreated.style.display = "block";
+    } else if (newroom != room) {
       leaveRoom(room);
-      socket.emit('join', {'username': username, 'room': newroom})
+      socket.emit("join", { username: username, room: newroom });
       console.log(`room joined ${newroom} by user ${username}`);
-      room = newroom
-      emptychat.style.display = 'none';
-      roomCreated.style.display = 'block';
+      room = newroom;
+      emptychat.style.display = "none";
+      roomCreated.style.display = "block";
     }
   }
 
-    function leaveRoom(leaving_room){
-      socket.emit('leave', {'username': username, 'room': leaving_room});
-      console.log(`${leaving_room} room by user ${username}`);
+  function leaveRoom(leaving_room) {
+    socket.emit("leave", { username: username, room: leaving_room });
+    console.log(`${leaving_room} room by user ${username}`);
+  }
+
+  // Clicking on the searched user to join room
+  document.querySelector("#user-search").addEventListener("click", () => {
+    searched_username = localStorage.getItem("searched_username");
+    let newroom = "";
+    if (searched_username < username) {
+      newroom = searched_username + "~" + username;
+    } else {
+      newroom = username + "~" + searched_username;
     }
-   
+    joinRoom(newroom);
+    document.querySelector("#other_user_name").innerText =
+      localStorage.getItem("searched_Name");
+  });
 
-// Clicking on the searched user to join room
-document.querySelector('#user-search').addEventListener('click', ()=> {
-  searched_username = localStorage.getItem('searched_username');
-  let newroom = '';
-  if(searched_username < username){
-    newroom = searched_username + '~' + username;
-  }
-  else{
-    newroom = username + '~' + searched_username;
-  }
-  joinRoom(newroom);
-  document.querySelector('#other_user_name').innerText = localStorage.getItem('searched_Name');
-})
-
+  document.querySelector("#leave-chat-room").addEventListener("click", () => {
+    leaveRoom(room);
+    emptychat.style.display = "block";
+    roomCreated.style.display = "none";
+  });
 });
