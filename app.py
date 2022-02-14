@@ -57,11 +57,6 @@ def chat():
     return render_template("chat.html", username=g.user['username'])
 
 
-@app.route("/chat2")
-def chat2():
-    return render_template("chat2.html", username=g.user['username'])
-
-
 @app.route("/about")
 def about():
     return render_template("about.html")
